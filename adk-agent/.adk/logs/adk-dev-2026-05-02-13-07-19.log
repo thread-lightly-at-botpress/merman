@@ -1,0 +1,34 @@
+{"timestamp":"2026-05-02T17:07:23.807Z","type":"info","args":["Trace endpoints:\n  ADK_SPAN_INGEST_URL=http://localhost:43187"]}
+{"timestamp":"2026-05-02T17:07:24.386Z","type":"info","args":["🤖 Botpress CLI v6.3.5"]}
+{"timestamp":"2026-05-02T17:07:24.656Z","type":"info","args":["╭──────────────────────────────────────────────╮\n   │                                              │\n   │   Update available 6.3.5 → 6.6.2             │\n   │                                              │\n   │   To update, run:                            │\n   │     for npm  npm i -g @botpress/cli          │\n   │     for yarn yarn global add @botpress/cli   │\n   │     for pnpm pnpm i -g @botpress/cli         │\n   │                                              │\n   ╰──────────────────────────────────────────────╯"]}
+{"timestamp":"2026-05-02T17:07:24.657Z","type":"warning","args":["⚠ This command is experimental and subject to breaking changes without notice."]}
+{"timestamp":"2026-05-02T17:07:26.676Z","type":"info","args":["○ Generating typings for bot..."]}
+{"timestamp":"2026-05-02T17:07:26.933Z","type":"info","args":["✓ Typings available at .botpress"]}
+{"timestamp":"2026-05-02T17:07:26.934Z","type":"info","args":["○ Bundling bot..."]}
+{"timestamp":"2026-05-02T17:07:28.263Z","type":"info","args":["✓ Bundle available at .botpress"]}
+{"timestamp":"2026-05-02T17:07:28.264Z","type":"info","args":["Build completed in 2083ms"]}
+{"timestamp":"2026-05-02T17:07:29.255Z","type":"info","args":["○ Deploying dev bot..."]}
+{"timestamp":"2026-05-02T17:07:30.005Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:07:31.381Z","type":"info","args":["✓ Dev Bot deployed with id \"2c58fd7c-a573-4ca6-b385-7e281a3fb05b\" at \"https://tunnel.botpress.cloud/b502a43b-cb48-4e4c-8d4b-569e316f1692\"\n\nSynchronizing tables...\nIntegrations:\n  → discord 1.1.0:"]}
+{"timestamp":"2026-05-02T17:07:32.099Z","type":"info","args":["Changes detected in output directory, reloading worker"]}
+{"timestamp":"2026-05-02T17:07:33.768Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:10:16.775Z","type":"info","args":["Changes detected, rebuilding"]}
+{"timestamp":"2026-05-02T17:10:17.022Z","type":"error","args":["× Build failed: Build failed with 1 error:\nbot.definition.ts:18:32: ERROR: Could not resolve \"./bp_modules/integration_webchat\""]}
+{"timestamp":"2026-05-02T17:10:19.006Z","type":"info","args":["Changes detected, rebuilding"]}
+{"timestamp":"2026-05-02T17:10:20.048Z","type":"info","args":["○ Generating typings for bot..."]}
+{"timestamp":"2026-05-02T17:10:20.297Z","type":"info","args":["✓ Typings available at .botpress"]}
+{"timestamp":"2026-05-02T17:10:20.297Z","type":"info","args":["○ Bundling bot..."]}
+{"timestamp":"2026-05-02T17:10:21.592Z","type":"info","args":["✓ Bundle available at .botpress"]}
+{"timestamp":"2026-05-02T17:10:21.593Z","type":"info","args":["Build completed in 2586ms"]}
+{"timestamp":"2026-05-02T17:10:22.117Z","type":"info","args":["Changes detected in output directory, reloading worker"]}
+{"timestamp":"2026-05-02T17:10:22.499Z","type":"info","args":["○ Deploying dev bot..."]}
+{"timestamp":"2026-05-02T17:10:23.013Z","type":"info","args":["× An error occurred while handling request:"]}
+{"timestamp":"2026-05-02T17:10:23.731Z","type":"info","args":["✓ Dev Bot deployed with id \"2c58fd7c-a573-4ca6-b385-7e281a3fb05b\" at \"https://tunnel.botpress.cloud/b502a43b-cb48-4e4c-8d4b-569e316f1692\"\nSynchronizing tables..."]}
+{"timestamp":"2026-05-02T17:10:23.910Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:10:25.559Z","type":"info","args":["Integrations:\n  → webchat 0.3.0:\n    ● Webhook: https://webhook.botpress.cloud/8037cfde-2aa5-43b7-86b2-b1147e5896f0\n\n  → discord 1.1.0:"]}
+{"timestamp":"2026-05-02T17:10:26.270Z","type":"info","args":["Changes detected in output directory, reloading worker"]}
+{"timestamp":"2026-05-02T17:10:28.055Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:15:09.167Z","type":"info","args":["Changes detected, rebuilding"]}
+{"timestamp":"2026-05-02T17:15:10.250Z","type":"info","args":["○ Generating typings for bot..."]}
+{"timestamp":"2026-05-02T17:15:10.523Z","type":"info","args":["✓ Typings available at .botpress"]}
+{"timestamp":"2026-05-02T17:15:10.524Z","type":"info","args":["○ Bundling bot..."]}

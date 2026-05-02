@@ -11,6 +11,6 @@ export default {
   id: "intver_01KQAZQM8HY0P8MS1GWBQSBPEC",
   uri: undefined,
   name: "discord",
-  version: "latest",
+  version: "1.1.0",
   definition,
 } satisfies sdk.IntegrationPackage

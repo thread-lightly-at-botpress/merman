@@ -6,7 +6,7 @@
   // Interface: listable
   // Integrations: 
   // Version: 0.0.2
-  // File: listable\index.ts
+  // File: listable/index.ts
   // Hash: 013e7a1cb22f4dba645b8af61f79fa04459b711c902790d2b2774a9c177a0e82
   // Updated at: 2025-12-16T19:33:52.332Z
   ////////////////////////////////////////////////////////

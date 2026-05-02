@@ -4,10 +4,10 @@
   // This file is auto-generated from the Botpress ADK
   // ADK Version: 1.18.2
   // Interface: typing-indicator
-  // Integrations: discord
+  // Integrations: discord, webchat
   // Version: 0.0.3
-  // File: typing_indicator\index.ts
-  // Hash: ba712db3fa352dbbd35b9b05827e3f18cbf16f8cc3a27a274ba15054c00b015f
+  // File: typing_indicator/index.ts
+  // Hash: 89e12240e243aec12a09be7107a8408701cb0245ae8689c1782cf3ab364348c2
   // Updated at: 2025-12-16T19:34:19.049Z
   ////////////////////////////////////////////////////////
 
@@ -43,11 +43,43 @@ messageId: string
         output: {  };
       },
 };
+    // Integration: webchat (webchat@0.3.0)
+    // Updated at: 2026-04-01T17:04:55.682Z
+    "webchat": {
+      /**
+ * Title: startTypingIndicator
+ * Description: No description
+ */
+      "startTypingIndicator": {
+        input: { conversationId: string; 
+/** The message ID to which the typing indicator should be attached */
+messageId: string
+; 
+/** The timeout in milliseconds after which the typing indicator should stop */
+timeout?: number
+ };
+        output: {  };
+      },
+
+      /**
+ * Title: stopTypingIndicator
+ * Description: No description
+ */
+      "stopTypingIndicator": {
+        input: { conversationId: string; 
+/** The message ID from which the typing indicator should be removed */
+messageId: string
+ };
+        output: {  };
+      },
+};
   };
 
   export const Interface_Actions_TypingIndicator = {
     "discord:startTypingIndicator": "discord:startTypingIndicator",
-    "discord:stopTypingIndicator": "discord:stopTypingIndicator"
+    "discord:stopTypingIndicator": "discord:stopTypingIndicator",
+    "webchat:startTypingIndicator": "webchat:startTypingIndicator",
+    "webchat:stopTypingIndicator": "webchat:stopTypingIndicator"
   };
 
   

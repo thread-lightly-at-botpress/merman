@@ -1,0 +1,16 @@
+{"timestamp":"2026-05-02T17:06:32.555Z","type":"info","args":["Trace endpoints:\n  ADK_SPAN_INGEST_URL=http://localhost:37417"]}
+{"timestamp":"2026-05-02T17:06:33.454Z","type":"info","args":["🤖 Botpress CLI v6.3.5"]}
+{"timestamp":"2026-05-02T17:06:33.976Z","type":"info","args":["╭──────────────────────────────────────────────╮\n   │                                              │\n   │   Update available 6.3.5 → 6.6.2             │\n   │                                              │\n   │   To update, run:                            │\n   │     for npm  npm i -g @botpress/cli          │\n   │     for yarn yarn global add @botpress/cli   │\n   │     for pnpm pnpm i -g @botpress/cli         │\n   │                                              │\n   ╰──────────────────────────────────────────────╯\n\n⚠ This command is experimental and subject to breaking changes without notice."]}
+{"timestamp":"2026-05-02T17:06:36.742Z","type":"info","args":["○ Generating typings for bot..."]}
+{"timestamp":"2026-05-02T17:06:37.128Z","type":"info","args":["✓ Typings available at .botpress"]}
+{"timestamp":"2026-05-02T17:06:37.130Z","type":"info","args":["○ Bundling bot..."]}
+{"timestamp":"2026-05-02T17:06:38.452Z","type":"info","args":["✓ Bundle available at .botpress"]}
+{"timestamp":"2026-05-02T17:06:38.453Z","type":"info","args":["Build completed in 2272ms"]}
+{"timestamp":"2026-05-02T17:06:39.257Z","type":"info","args":["○ Deploying dev bot..."]}
+{"timestamp":"2026-05-02T17:06:40.074Z","type":"info","args":["✓ Dev Bot deployed with id \"2c58fd7c-a573-4ca6-b385-7e281a3fb05b\" at \"https://tunnel.botpress.cloud/0dc832bc-7a5e-4f07-a19e-ba69a42a4c30\"\n\nSynchronizing tables..."]}
+{"timestamp":"2026-05-02T17:06:40.194Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:06:41.724Z","type":"info","args":["Integrations:\n  → discord 1.1.0:"]}
+{"timestamp":"2026-05-02T17:06:42.414Z","type":"info","args":["Changes detected in output directory, reloading worker"]}
+{"timestamp":"2026-05-02T17:06:44.118Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:07:12.364Z","type":"info","args":["Changes detected, rebuilding"]}
+{"timestamp":"2026-05-02T17:07:12.689Z","type":"error","args":["× Build failed: Build failed with 1 error:\nbot.definition.ts:17:32: ERROR: Could not resolve \"./bp_modules/integration_discord\""]}

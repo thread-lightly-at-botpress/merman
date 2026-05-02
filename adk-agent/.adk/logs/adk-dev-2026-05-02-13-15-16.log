@@ -1,0 +1,14 @@
+{"timestamp":"2026-05-02T17:15:19.699Z","type":"info","args":["Trace endpoints:\n  ADK_SPAN_INGEST_URL=http://localhost:45171"]}
+{"timestamp":"2026-05-02T17:15:20.500Z","type":"info","args":["🤖 Botpress CLI v6.3.5"]}
+{"timestamp":"2026-05-02T17:15:21.030Z","type":"info","args":["╭──────────────────────────────────────────────╮\n   │                                              │\n   │   Update available 6.3.5 → 6.6.2             │\n   │                                              │\n   │   To update, run:                            │\n   │     for npm  npm i -g @botpress/cli          │\n   │     for yarn yarn global add @botpress/cli   │\n   │     for pnpm pnpm i -g @botpre"]}
+{"timestamp":"2026-05-02T17:15:21.031Z","type":"info","args":["ss/cli         │\n   │                                              │\n   ╰──────────────────────────────────────────────╯"]}
+{"timestamp":"2026-05-02T17:15:21.032Z","type":"warning","args":["⚠ This command is experimental and subject to breaking changes without notice."]}
+{"timestamp":"2026-05-02T17:15:22.983Z","type":"info","args":["○ Generating typings for bot..."]}
+{"timestamp":"2026-05-02T17:15:23.357Z","type":"info","args":["✓ Typings available at .botpress"]}
+{"timestamp":"2026-05-02T17:15:23.358Z","type":"info","args":["○ Bundling bot..."]}
+{"timestamp":"2026-05-02T17:15:24.797Z","type":"info","args":["✓ Bundle available at .botpress"]}
+{"timestamp":"2026-05-02T17:15:24.798Z","type":"info","args":["Build completed in 2373ms"]}
+{"timestamp":"2026-05-02T17:15:26.035Z","type":"info","args":["○ Deploying dev bot..."]}
+{"timestamp":"2026-05-02T17:15:26.627Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:15:28.261Z","type":"info","args":["✓ Dev Bot deployed with id \"2c58fd7c-a573-4ca6-b385-7e281a3fb05b\" at \"https://tunnel.botpress.cloud/6d074d0f-8341-4004-80c7-8e4c89c01e95\"\n\nSynchronizing tables..."]}
+{"timestamp":"2026-05-02T17:15:28.521Z","type":"info","args":["Integrations:\n  → webchat 0.3.0:\n    ● Webhook: https://webhook.botpress.cloud/8037cfde-2aa5-43b7-86b2-b1147e5896f0\n\n  → discord 1.1.0:"]}

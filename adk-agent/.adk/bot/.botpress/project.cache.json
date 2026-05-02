@@ -1,3 +1,10 @@
 {
-  "botId": "a3793f7d-a6e8-4cae-9dab-c9aa61947755"
+  "devId": "2c58fd7c-a573-4ca6-b385-7e281a3fb05b",
+  "botId": "a3793f7d-a6e8-4cae-9dab-c9aa61947755",
+  "secrets": {
+    "DISCORD_BOT_TOKEN": "MTUwMDE2MjMyNTY2NjIwNTg5Ng.GYdAMk.l8MMfzsIuFiyf6YGY0kO17Trb012dsynxrww9E",
+    "DISCORD_CLIENT_ID": "1500162325666205896",
+    "DISCORD_PUBLIC_KEY": "063141cd6786cac7432f564d4b44c29862ca3eaf9a7ad7b22aafd651ad773c24"
+  },
+  "tunnelId": "6d074d0f-8341-4004-80c7-8e4c89c01e95"
 }

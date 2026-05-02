@@ -1,0 +1,6 @@
+{"timestamp":"2026-05-02T16:53:06.936Z","type":"info","args":["Trace endpoints:\n  ADK_SPAN_INGEST_URL=http://localhost:43871"]}
+{"timestamp":"2026-05-02T16:53:07.713Z","type":"info","args":["🤖 Botpress CLI v6.3.5"]}
+{"timestamp":"2026-05-02T16:53:08.183Z","type":"info","args":["╭──────────────────────────────────────────────╮\n   │                                              │\n   │   Update available 6.3.5 → 6.6.2             │\n   │                                              │\n   │   To update, run:                            │\n   │     for npm  npm i -g @botpress/cl"]}
+{"timestamp":"2026-05-02T16:53:08.184Z","type":"info","args":["i          │\n   │     for yarn yarn global add @botpress/cli   │\n   │     for pnpm pnpm i -g @botpress/cli         │\n   │                                              │\n   ╰──────────────────────────────────────────────╯"]}
+{"timestamp":"2026-05-02T16:53:08.186Z","type":"warning","args":["⚠ This command is experimental and subject to breaking changes without notice."]}
+{"timestamp":"2026-05-02T16:53:09.624Z","type":"info","args":["\u001b[2K\u001b[1G\u001b[36m?\u001b[39m \u001b[1mEnter value for secret \"COMPILER_API_URL\" (optional)\u001b[22m \u001b[90m›\u001b[39m \u001b7\u001b8"]}

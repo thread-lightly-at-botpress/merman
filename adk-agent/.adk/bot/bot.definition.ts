@@ -15,6 +15,7 @@ import { BotDefinition, z } from "@botpress/sdk";
   } from "@botpress/runtime/definition";
     
 import integration_discord from "./bp_modules/integration_discord";
+import integration_webchat from "./bp_modules/integration_webchat";
 
     const bot = new BotDefinition({
 
@@ -24,16 +25,8 @@ import integration_discord from "./bp_modules/integration_discord";
         
       },
       
-configuration: {
-schema: z.object({
-DISCORD_BOT_TOKEN: z.string(),
-DISCORD_CLIENT_ID: z.string(),
-DISCORD_PUBLIC_KEY: z.string(),
-}).catchall(z.never())
-},
-
       
-secrets: {"COMPILER_API_URL":{"optional":true},"COMPILER_API_KEY":{"optional":true},"DISCORD_BOT_TOKEN":{},"DISCORD_CLIENT_ID":{},"DISCORD_PUBLIC_KEY":{}},
+secrets: {"DISCORD_BOT_TOKEN":{},"DISCORD_CLIENT_ID":{},"DISCORD_PUBLIC_KEY":{}},
 
       user: {
         tags: {
@@ -197,6 +190,7 @@ rows: z.array(z.any()),
         
       },
     });
-bot.addIntegration(integration_discord, { alias: "discord", enabled: false });
+bot.addIntegration(integration_discord, { alias: "discord", enabled: true, configuration: {"typingIndicator":false} });
+bot.addIntegration(integration_webchat, { alias: "webchat", enabled: true });
 
 export default bot;

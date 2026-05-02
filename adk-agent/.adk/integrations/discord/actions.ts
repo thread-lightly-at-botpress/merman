@@ -5,7 +5,7 @@
   // ADK Version: 1.18.2
   // Integration: discord
   // Version: 1.1.0
-  // File: discord\actions.ts
+  // File: discord/actions.ts
   // Hash: 2459abd2e0b561675ce4ccd3fb58bed92316af5a8726ab65752e2ba09625a4c5
   // Updated at: 2026-04-28T21:25:47.689Z
   ////////////////////////////////////////////////////////
