@@ -7,12 +7,14 @@ import {
 import { TopBar } from './components/TopBar'
 import { Editor } from './components/Editor'
 import { GraphPreview } from './components/GraphPreview'
+import { CppOutput } from './components/CppOutput'
 import { BottomBar } from './components/BottomBar'
 import { Sidebar } from './components/Sidebar'
+import { AiAgentPanel } from './components/AiAgentPanel'
 import { useFiles } from './hooks/useFiles'
 import { useMermaid } from './hooks/useMermaid'
 import { compileUML } from './api/compile'
-import type { CompileStatus } from './types'
+import type { AiChatMessage, CompileStatus, GeneratedCppFile } from './types'
 import { readTextFiles } from './utils/readLocalFiles'
 
 export default function App() {
@@ -35,12 +37,23 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [compileStatus, setCompileStatus] = useState<CompileStatus>('idle')
   const [compileDuration, setCompileDuration] = useState<number | null>(null)
+  const [generatedCppFiles, setGeneratedCppFiles] = useState<GeneratedCppFile[]>([])
+  const [activeGeneratedPath, setActiveGeneratedPath] = useState<string | null>(null)
+  const [aiPanelOpen, setAiPanelOpen] = useState(false)
+  const [aiMessages, setAiMessages] = useState<AiChatMessage[]>([])
+
+  useEffect(() => {
+    setGeneratedCppFiles([])
+    setActiveGeneratedPath(null)
+  }, [activeFileId])
 
   const handleCompile = useCallback(async () => {
     setCompileStatus('running')
     const t0 = Date.now()
     try {
-      await compileUML(activeFile.source)
+      const { files } = await compileUML(activeFile.source)
+      setGeneratedCppFiles(files)
+      setActiveGeneratedPath(files[0]?.path ?? null)
       setCompileStatus('done')
       setCompileDuration(Date.now() - t0)
     } catch {
@@ -141,7 +154,17 @@ export default function App() {
         onAddFile={addFile}
         onRenameActiveFile={handleRenameActiveFile}
         onRemoveActiveFile={handleRemoveActiveFile}
+        onToggleAiPanel={() => setAiPanelOpen((prev) => !prev)}
+        aiPanelOpen={aiPanelOpen}
         onCompile={handleCompile}
+      />
+
+      <AiAgentPanel
+        open={aiPanelOpen}
+        onClose={() => setAiPanelOpen(false)}
+        diagramSource={activeFile.source}
+        messages={aiMessages}
+        onMessagesChange={setAiMessages}
       />
 
       <ResizablePanelGroup direction="horizontal" className="flex-1 overflow-hidden">
@@ -164,14 +187,24 @@ export default function App() {
 
         <ResizablePanel defaultSize={80} minSize={40}>
           <ResizablePanelGroup direction="horizontal" className="h-full">
-            <ResizablePanel defaultSize={50} minSize={25}>
+            <ResizablePanel defaultSize={34} minSize={18}>
               <Editor value={activeFile.source} onChange={updateSource} />
             </ResizablePanel>
 
             <ResizableHandle className="w-px bg-zinc-800 hover:bg-orange-500 transition-colors" />
 
-            <ResizablePanel defaultSize={50} minSize={25}>
+            <ResizablePanel defaultSize={33} minSize={18}>
               <GraphPreview svg={svg} error={renderError} />
+            </ResizablePanel>
+
+            <ResizableHandle className="w-px bg-zinc-800 hover:bg-orange-500 transition-colors" />
+
+            <ResizablePanel defaultSize={33} minSize={18}>
+              <CppOutput
+                files={generatedCppFiles}
+                activePath={activeGeneratedPath}
+                onSelectPath={setActiveGeneratedPath}
+              />
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
