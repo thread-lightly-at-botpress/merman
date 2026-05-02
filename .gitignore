@@ -1,0 +1,44 @@
+# OS/editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Node/TypeScript
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build and coverage artifacts
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Local runtime/temp output
+tmp/
+*.tmp
+
+# Generated binaries/objects
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
