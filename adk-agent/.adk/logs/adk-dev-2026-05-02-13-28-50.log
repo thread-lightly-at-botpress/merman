@@ -43,3 +43,12 @@
 {"timestamp":"2026-05-02T17:34:33.403Z","type":"info","args":["× Tunnel closed: 1006"]}
 {"timestamp":"2026-05-02T17:34:33.404Z","type":"info","args":["○ Reconnecting tunnel..."]}
 {"timestamp":"2026-05-02T17:34:33.790Z","type":"info","args":["✓ Reconnected"]}
+{"timestamp":"2026-05-02T17:49:21.010Z","type":"info","args":["Changes detected, rebuilding"]}
+{"timestamp":"2026-05-02T17:49:21.975Z","type":"info","args":["○ Generating typings for bot..."]}
+{"timestamp":"2026-05-02T17:49:22.313Z","type":"info","args":["✓ Typings available at .botpress"]}
+{"timestamp":"2026-05-02T17:49:22.314Z","type":"info","args":["○ Bundling bot..."]}
+{"timestamp":"2026-05-02T17:49:23.799Z","type":"info","args":["✓ Bundle available at .botpress"]}
+{"timestamp":"2026-05-02T17:49:23.800Z","type":"info","args":["Build completed in 2788ms"]}
+{"timestamp":"2026-05-02T17:49:24.321Z","type":"info","args":["Changes detected in output directory, reloading worker"]}
+{"timestamp":"2026-05-02T17:49:25.526Z","type":"info","args":["Skipping deployment step. No changes found in bot.definition.ts"]}
+{"timestamp":"2026-05-02T17:49:26.439Z","type":"info","args":["Listening on port 3000"]}

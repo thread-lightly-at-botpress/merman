@@ -10,6 +10,7 @@ type Props = {
   compileDuration: number | null
   compileError?: string | null
   generatedFileCount?: number | null
+  onShowOutput?: () => void
 }
 
 export function BottomBar({
@@ -20,6 +21,7 @@ export function BottomBar({
   compileDuration,
   compileError = null,
   generatedFileCount = null,
+  onShowOutput,
 }: Props) {
   return (
     <div className="h-6 flex items-center px-3 gap-3 border-t border-orange-950/80 bg-zinc-950 shrink-0 text-xs font-mono text-zinc-500 shadow-[0_-1px_0_0_rgba(249,115,22,0.12)]">
@@ -43,10 +45,20 @@ export function BottomBar({
       {compileStatus === 'done' && compileDuration !== null && (
         <>
           <Separator orientation="vertical" className="h-3 bg-orange-600/35" />
-          <span className="text-orange-400">
-            compiled in {(compileDuration / 1000).toFixed(1)}s
-            {generatedFileCount !== null && ` · ${generatedFileCount} file${generatedFileCount === 1 ? '' : 's'}`}
-          </span>
+          {onShowOutput && (generatedFileCount ?? 0) > 0 ? (
+            <button
+              onClick={onShowOutput}
+              className="text-orange-400 hover:text-orange-300 hover:underline cursor-pointer"
+              title="Show generated files"
+            >
+              compiled in {(compileDuration / 1000).toFixed(1)}s · {generatedFileCount} file{generatedFileCount === 1 ? '' : 's'}
+            </button>
+          ) : (
+            <span className="text-orange-400">
+              compiled in {(compileDuration / 1000).toFixed(1)}s
+              {generatedFileCount !== null && ` · ${generatedFileCount} file${generatedFileCount === 1 ? '' : 's'}`}
+            </span>
+          )}
         </>
       )}
 

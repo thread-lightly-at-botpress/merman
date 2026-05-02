@@ -1,72 +1,92 @@
 import { Autonomous, z } from "@botpress/runtime"
-import { parse } from "@a24z/mermaid-parser"
 
-const cppTree = [
-  "cpp-service/",
-  "  CMakeLists.txt",
-  "  README.md",
-  "  include/",
-  "    app/",
-  "      App.hpp",
-  "      Container.hpp",
-  "      HttpServer.hpp",
-  "  src/",
-  "    main.cpp",
-  "    app/",
-  "      App.cpp",
-  "      Container.cpp",
-  "      HttpServer.cpp",
-  "  tests/",
-  "    App.test.cpp",
-]
+const COMPILER_API_URL = process.env.COMPILER_API_URL ?? "http://localhost:8080"
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+type CompileApiResponse = {
+  files: { path: string; content: string; className: string }[]
+  warnings: { code: string; message: string }[]
+  errors: { code: string; message: string }[]
+  metadata: {
+    classCount: number
+    relationshipCount: number
+    targetLanguage: "cpp" | "python"
+    generatedAt: string
+  }
+  sessionId?: string
+  explorerUrl?: string
+}
 
 export default new Autonomous.Tool({
   name: "compileDiagram",
   description:
-    "Compile validated Mermaid UML into a C++ boilerplate template. Use only after the user explicitly confirms they want to build.",
+    "Compile validated Mermaid UML into C++ boilerplate and produce a browsable file explorer URL. Use only after the user explicitly confirms they want to build.",
   input: z.object({
     mermaidCode: z
       .string()
-      .describe("Validated Mermaid diagram source to compile into C++ boilerplate."),
-    projectName: z
-      .string()
-      .default("cpp-service")
-      .describe("Output project folder name to include in the generated archive."),
+      .describe("Mermaid class-diagram source to compile."),
+    targetLanguage: z
+      .enum(["cpp", "python"])
+      .default("cpp")
+      .describe("Target output language for the generated boilerplate."),
   }),
   output: z.object({
-    zipUrl: z.string(),
+    explorerUrl: z.string(),
+    sessionId: z.string(),
+    fileCount: z.number(),
     projectTree: z.array(z.string()),
-    requestId: z.string(),
+    classCount: z.number(),
     compiledAt: z.string(),
     engine: z.string(),
   }),
   handler: async ({
     mermaidCode,
-    projectName,
+    targetLanguage,
   }: {
     mermaidCode: string
-    projectName: string
+    targetLanguage: "cpp" | "python"
   }) => {
-    const parseResult = await parse(mermaidCode)
-
-    if (!parseResult.valid) {
+    let res: Response
+    try {
+      res = await fetch(`${COMPILER_API_URL}/compile`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          mermaid: mermaidCode,
+          options: { targetLanguage, writeToDisk: false, namespaceAsDirs: true },
+        }),
+      })
+    } catch (err) {
       throw new Autonomous.ThinkSignal(
-        "Invalid Mermaid syntax provided to compileDiagram.",
-        `Regenerate Mermaid so it parses cleanly first. Parser error: ${parseResult.error ?? "unknown syntax error"}`
+        "Compiler API is unreachable.",
+        `Could not reach the merman compiler at ${COMPILER_API_URL}. Make sure it is running (\`npm run dev\` in merman_compiler) and retry. Underlying error: ${(err as Error).message}`
       )
     }
 
-    await sleep(2000)
+    const data = (await res.json()) as CompileApiResponse
 
-    const requestId = `mock_${Date.now()}`
+    if (res.status !== 200 || data.errors.length > 0) {
+      const issues = data.errors.map((e) => `${e.code}: ${e.message}`).join("; ")
+      throw new Autonomous.ThinkSignal(
+        "The Mermaid diagram failed to compile.",
+        `Fix the diagram before retrying. Compiler errors: ${issues || `HTTP ${res.status}`}`
+      )
+    }
+
+    if (!data.sessionId || !data.explorerUrl) {
+      throw new Autonomous.ThinkSignal(
+        "Compiler returned no explorer session.",
+        "The compiler API succeeded but did not return a sessionId/explorerUrl. The compiler service may be out of date; restart it and retry."
+      )
+    }
+
     return {
-      zipUrl: `https://mock-compiler.local/downloads/${encodeURIComponent(projectName)}-${requestId}.zip`,
-      projectTree: cppTree.map((line) => line.replace("cpp-service", projectName)),
-      requestId,
-      compiledAt: new Date().toISOString(),
-      engine: "mock-cpp-boilerplate-compiler:v1",
+      explorerUrl: data.explorerUrl,
+      sessionId: data.sessionId,
+      fileCount: data.files.length,
+      projectTree: data.files.map((f) => f.path).sort(),
+      classCount: data.metadata.classCount,
+      compiledAt: data.metadata.generatedAt,
+      engine: `merman-compiler:${targetLanguage}`,
     }
   },
 })

@@ -24,10 +24,12 @@ const RELATION_TOKEN_MAP: Record<string, RelationshipKind> = {
   "--": "association",
 };
 
-const METHOD_RE =
-  /^([+\-#~])?(\$)?([A-Za-z_][A-Za-z0-9_]*)\((.*)\)\s*([:*]\s*([^\s]+))?\s*(<<[^>]+>>)?$/;
-const ATTRIBUTE_RE =
+const METHOD_HEAD_RE =
+  /^([+\-#~])?(\$)?([A-Za-z_][A-Za-z0-9_]*)\s*\(([^)]*)\)(.*)$/;
+const ATTRIBUTE_COLON_RE =
   /^([+\-#~])?(\$)?([A-Za-z_][A-Za-z0-9_]*)\s*:\s*([^=]+?)(\s*=\s*(.+))?$/;
+const ATTRIBUTE_TYPED_RE =
+  /^([+\-#~])?(\$)?([A-Za-z_][\w<>,\s\[\]]*?)\s+([A-Za-z_][A-Za-z0-9_]*)(\s*=\s*(.+))?$/;
 
 export class MermaidParser {
   parse(input: string): MermaidModel {
@@ -172,42 +174,89 @@ export class MermaidParser {
     line: string,
     comments: string[]
   ): { kind: "attribute"; node: AttributeNode } | { kind: "method"; node: MethodNode } {
-    const method = line.match(METHOD_RE);
+    const method = line.match(METHOD_HEAD_RE);
     if (method) {
-      const [, vis, isStatic, name, paramsRaw, , returnTypeRaw, annotationRaw] = method;
-      const annotations = (annotationRaw ?? "").toLowerCase();
+      const [, vis, isStatic, name, paramsRaw, tailRaw] = method;
+      let tail = tailRaw.trim();
+      let trailingAbstract = false;
+      let trailingStatic = false;
+
+      // Mermaid trailing modifiers: ()* = abstract, ()$ = static
+      if (tail.startsWith("*")) {
+        trailingAbstract = true;
+        tail = tail.slice(1).trim();
+      } else if (tail.startsWith("$")) {
+        trailingStatic = true;
+        tail = tail.slice(1).trim();
+      }
+
+      // Optional <<annotation>> at the end
+      let annotationRaw = "";
+      const annMatch = tail.match(/^(.*?)\s*(<<[^>]+>>)\s*$/);
+      if (annMatch) {
+        tail = annMatch[1].trim();
+        annotationRaw = annMatch[2];
+      }
+
+      // Optional return type: either ": Type" (TS-style) or "Type" (Mermaid-style)
+      let returnType = "void";
+      if (tail.startsWith(":")) {
+        tail = tail.slice(1).trim();
+      }
+      if (tail) {
+        returnType = tail;
+      }
+
+      const annotations = annotationRaw.toLowerCase();
       return {
         kind: "method",
         node: {
           name,
           visibility: this.mapVisibility(vis),
-          returnType: returnTypeRaw?.trim() || "void",
+          returnType,
           parameters: this.parseParameters(paramsRaw),
-          isStatic: !!isStatic || annotations.includes("static"),
+          isStatic: !!isStatic || trailingStatic || annotations.includes("static"),
           isClassMethod: annotations.includes("classmethod"),
-          isAbstract: annotations.includes("abstract"),
+          isAbstract: trailingAbstract || annotations.includes("abstract"),
           isOverride: annotations.includes("override"),
           comments,
         },
       };
     }
 
-    const attribute = line.match(ATTRIBUTE_RE);
-    if (!attribute) {
-      throw new Error(`Invalid class member syntax: ${line}`);
+    const colonAttr = line.match(ATTRIBUTE_COLON_RE);
+    if (colonAttr) {
+      const [, vis, isStatic, name, typeRaw, , defaultValueRaw] = colonAttr;
+      return {
+        kind: "attribute",
+        node: {
+          name,
+          type: typeRaw.trim(),
+          visibility: this.mapVisibility(vis),
+          defaultValue: defaultValueRaw?.trim(),
+          isStatic: !!isStatic,
+          comments,
+        },
+      };
     }
-    const [, vis, isStatic, name, typeRaw, , defaultValueRaw] = attribute;
-    return {
-      kind: "attribute",
-      node: {
-        name,
-        type: typeRaw.trim(),
-        visibility: this.mapVisibility(vis),
-        defaultValue: defaultValueRaw?.trim(),
-        isStatic: !!isStatic,
-        comments,
-      },
-    };
+
+    const typedAttr = line.match(ATTRIBUTE_TYPED_RE);
+    if (typedAttr) {
+      const [, vis, isStatic, typeRaw, name, , defaultValueRaw] = typedAttr;
+      return {
+        kind: "attribute",
+        node: {
+          name,
+          type: typeRaw.trim(),
+          visibility: this.mapVisibility(vis),
+          defaultValue: defaultValueRaw?.trim(),
+          isStatic: !!isStatic,
+          comments,
+        },
+      };
+    }
+
+    throw new Error(`Invalid class member syntax: ${line}`);
   }
 
   private mapVisibility(raw?: string): Visibility {
@@ -229,13 +278,43 @@ export class MermaidParser {
       return [];
     }
     return text.split(",").map((entry) => {
-      const [namePart, typePart] = entry.split(":").map((s) => s.trim());
-      if (!namePart || !typePart) {
+      const trimmed = entry.trim();
+      if (!trimmed) {
         throw new Error(`Invalid parameter syntax: ${entry}`);
       }
-      const [type, defaultValue] = typePart.split("=").map((s) => s.trim());
+
+      // Split off optional default value first: "x: int = 5" or "int x = 5"
+      const eqIdx = trimmed.indexOf("=");
+      const head = eqIdx >= 0 ? trimmed.slice(0, eqIdx).trim() : trimmed;
+      const defaultValue = eqIdx >= 0 ? trimmed.slice(eqIdx + 1).trim() : undefined;
+
+      let name: string;
+      let type: string;
+
+      if (head.includes(":")) {
+        const [namePart, typePart] = head.split(":").map((s) => s.trim());
+        if (!namePart) {
+          throw new Error(`Invalid parameter syntax: ${entry}`);
+        }
+        name = namePart;
+        type = typePart || "any";
+      } else {
+        const parts = head.split(/\s+/);
+        if (parts.length === 1) {
+          name = parts[0];
+          type = "any";
+        } else {
+          name = parts[parts.length - 1];
+          type = parts.slice(0, -1).join(" ");
+        }
+      }
+
+      if (!name) {
+        throw new Error(`Invalid parameter syntax: ${entry}`);
+      }
+
       return {
-        name: namePart,
+        name,
         type,
         defaultValue: defaultValue || undefined,
       };

@@ -1,6 +1,8 @@
 import express from "express";
 import { z } from "zod";
 import { CompilationService } from "./service.js";
+import { SessionStore } from "./store.js";
+import { createExplorerRouter } from "./explorer.js";
 
 const compileRequestSchema = z.object({
   mermaid: z.string().min(1),
@@ -18,13 +20,18 @@ const validateRequestSchema = z.object({
   mermaid: z.string().min(1),
 });
 
-export function createApiApp(service = new CompilationService()) {
+export function createApiApp(
+  service = new CompilationService(),
+  store = new SessionStore()
+) {
   const app = express();
   app.use(express.json({ limit: "2mb" }));
 
   app.get("/health", (_req, res) => {
     res.json({ status: "ok", service: "merman-compiler", timestamp: new Date().toISOString() });
   });
+
+  app.use(createExplorerRouter(store));
 
   app.get("/templates", (_req, res) => {
     res.json({ templates: service.templates() });
@@ -49,6 +56,15 @@ export function createApiApp(service = new CompilationService()) {
       });
     }
     const result = await service.compile(parsed.data.mermaid, parsed.data.options);
+    if (result.errors.length === 0 && result.files.length > 0) {
+      const session = store.put(result);
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      return res.status(200).json({
+        ...result,
+        sessionId: session.id,
+        explorerUrl: `${baseUrl}/explorer/${session.id}`,
+      });
+    }
     return res.status(result.errors.length ? 422 : 200).json(result);
   });
 

@@ -9,6 +9,7 @@ import { Editor } from './components/Editor'
 import { GraphPreview } from './components/GraphPreview'
 import { BottomBar } from './components/BottomBar'
 import { Sidebar } from './components/Sidebar'
+import { CompileOutput } from './components/CompileOutput'
 import { useFiles } from './hooks/useFiles'
 import { useMermaid } from './hooks/useMermaid'
 import { compileMermaid } from './api/compile'
@@ -38,6 +39,7 @@ export default function App() {
   const [compileDuration, setCompileDuration] = useState<number | null>(null)
   const [compileResult, setCompileResult] = useState<CompileResult | null>(null)
   const [compileError, setCompileError] = useState<string | null>(null)
+  const [outputOpen, setOutputOpen] = useState(false)
 
   const handleCompile = useCallback(async () => {
     setCompileStatus('running')
@@ -52,13 +54,16 @@ export default function App() {
       if (result.errors.length > 0) {
         setCompileStatus('error')
         setCompileError(result.errors.map((e) => `${e.code}: ${e.message}`).join('\n'))
+        setOutputOpen(false)
       } else {
         setCompileStatus('done')
+        setOutputOpen(result.files.length > 0)
       }
     } catch (err) {
       setCompileResult(null)
       setCompileStatus('error')
       setCompileError(err instanceof Error ? err.message : 'Compile request failed')
+      setOutputOpen(false)
     }
   }, [activeFile.source])
 
@@ -177,16 +182,29 @@ export default function App() {
         )}
 
         <ResizablePanel defaultSize={80} minSize={40}>
-          <ResizablePanelGroup direction="horizontal" className="h-full">
-            <ResizablePanel defaultSize={50} minSize={25}>
-              <Editor value={activeFile.source} onChange={updateSource} />
+          <ResizablePanelGroup direction="vertical" className="h-full">
+            <ResizablePanel defaultSize={outputOpen && compileResult ? 60 : 100} minSize={20}>
+              <ResizablePanelGroup direction="horizontal" className="h-full">
+                <ResizablePanel defaultSize={50} minSize={25}>
+                  <Editor value={activeFile.source} onChange={updateSource} />
+                </ResizablePanel>
+
+                <ResizableHandle className="w-px bg-zinc-800 hover:bg-orange-500 transition-colors" />
+
+                <ResizablePanel defaultSize={50} minSize={25}>
+                  <GraphPreview svg={svg} error={renderError} />
+                </ResizablePanel>
+              </ResizablePanelGroup>
             </ResizablePanel>
 
-            <ResizableHandle className="w-px bg-zinc-800 hover:bg-orange-500 transition-colors" />
-
-            <ResizablePanel defaultSize={50} minSize={25}>
-              <GraphPreview svg={svg} error={renderError} />
-            </ResizablePanel>
+            {outputOpen && compileResult && (
+              <>
+                <ResizableHandle className="h-px bg-zinc-800 hover:bg-orange-500 transition-colors" />
+                <ResizablePanel defaultSize={40} minSize={15}>
+                  <CompileOutput result={compileResult} onClose={() => setOutputOpen(false)} />
+                </ResizablePanel>
+              </>
+            )}
           </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>
@@ -199,6 +217,11 @@ export default function App() {
         compileDuration={compileDuration}
         compileError={compileError}
         generatedFileCount={compileResult?.files.length ?? null}
+        onShowOutput={
+          compileResult && compileResult.files.length > 0
+            ? () => setOutputOpen(true)
+            : undefined
+        }
       />
     </div>
   )
