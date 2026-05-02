@@ -11,8 +11,9 @@ import { BottomBar } from './components/BottomBar'
 import { Sidebar } from './components/Sidebar'
 import { useFiles } from './hooks/useFiles'
 import { useMermaid } from './hooks/useMermaid'
-import { compileUML } from './api/compile'
+import { compileMermaid } from './api/compile'
 import type { CompileStatus } from './types'
+import type { CompileResult } from './types/api'
 import { readTextFiles } from './utils/readLocalFiles'
 
 export default function App() {
@@ -35,16 +36,29 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [compileStatus, setCompileStatus] = useState<CompileStatus>('idle')
   const [compileDuration, setCompileDuration] = useState<number | null>(null)
+  const [compileResult, setCompileResult] = useState<CompileResult | null>(null)
+  const [compileError, setCompileError] = useState<string | null>(null)
 
   const handleCompile = useCallback(async () => {
     setCompileStatus('running')
+    setCompileError(null)
     const t0 = Date.now()
     try {
-      await compileUML(activeFile.source)
-      setCompileStatus('done')
+      const result = await compileMermaid(activeFile.source, {
+        targetLanguage: 'cpp',
+      })
+      setCompileResult(result)
       setCompileDuration(Date.now() - t0)
-    } catch {
+      if (result.errors.length > 0) {
+        setCompileStatus('error')
+        setCompileError(result.errors.map((e) => `${e.code}: ${e.message}`).join('\n'))
+      } else {
+        setCompileStatus('done')
+      }
+    } catch (err) {
+      setCompileResult(null)
       setCompileStatus('error')
+      setCompileError(err instanceof Error ? err.message : 'Compile request failed')
     }
   }, [activeFile.source])
 
@@ -183,6 +197,8 @@ export default function App() {
         renderError={renderError}
         compileStatus={compileStatus}
         compileDuration={compileDuration}
+        compileError={compileError}
+        generatedFileCount={compileResult?.files.length ?? null}
       />
     </div>
   )

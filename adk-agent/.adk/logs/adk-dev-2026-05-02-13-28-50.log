@@ -1,0 +1,45 @@
+{"timestamp":"2026-05-02T17:28:53.054Z","type":"info","args":["Trace endpoints:\n  ADK_SPAN_INGEST_URL=http://localhost:45829"]}
+{"timestamp":"2026-05-02T17:28:54.416Z","type":"info","args":["🤖 Botpress CLI v6.3.5"]}
+{"timestamp":"2026-05-02T17:28:55.195Z","type":"info","args":["╭──────────────────────────────────────────────╮\n   │                                              │\n   │   Update available 6.3.5 → 6.6.2             │\n   │                                              │\n   │   To update, run:                            │\n   │     for npm  npm i -g @botpress/cli          │\n   │     for yarn yarn global add @botpress/cli   │\n   │     for pnpm pnpm i -g @botpress/cli         │\n   │                                              │\n   ╰──────────────────────────────────────────────╯"]}
+{"timestamp":"2026-05-02T17:28:55.196Z","type":"warning","args":["⚠ This command is experimental and subject to breaking changes without notice."]}
+{"timestamp":"2026-05-02T17:28:57.014Z","type":"info","args":["○ Generating typings for bot..."]}
+{"timestamp":"2026-05-02T17:28:57.387Z","type":"info","args":["✓ Typings available at .botpress"]}
+{"timestamp":"2026-05-02T17:28:57.388Z","type":"info","args":["○ Bundling bot..."]}
+{"timestamp":"2026-05-02T17:28:58.762Z","type":"info","args":["✓ Bundle available at .botpress"]}
+{"timestamp":"2026-05-02T17:28:58.763Z","type":"info","args":["Build completed in 2295ms"]}
+{"timestamp":"2026-05-02T17:28:59.968Z","type":"info","args":["○ Deploying dev bot..."]}
+{"timestamp":"2026-05-02T17:29:00.336Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:29:04.331Z","type":"info","args":["✓ Dev Bot deployed with id \"2c58fd7c-a573-4ca6-b385-7e281a3fb05b\" at \"https://tunnel.botpress.cloud/13b9064e-30e6-468e-98c7-6609c5060696\"\n\nSynchronizing tables...\nIntegrations:\n  → webchat 0.3.0:\n    ● Webhook: https://webhook.botpress.cloud/8037cfde-2aa5-43b7-86b2-b1147e5896f0\n\n  → discord 1.1.0:"]}
+{"timestamp":"2026-05-02T17:29:05.614Z","type":"info","args":["Changes detected in output directory, reloading worker"]}
+{"timestamp":"2026-05-02T17:29:07.807Z","type":"info","args":["Listening on port 3000"]}
+{"timestamp":"2026-05-02T17:31:23.824Z","type":"stderr","args":["Error processing task task-1777743083795-3qvney9t9:","{}"]}
+{"timestamp":"2026-05-02T17:31:23.826Z","type":"stderr","args":["[WorkerPool] Worker 10 error on task task-1777743083795-3qvney9t9:","Missing bot id header"]}
+{"timestamp":"2026-05-02T17:31:23.826Z","type":"stderr","args":["[Main] Error processing event:","{}"]}
+{"timestamp":"2026-05-02T17:31:23.827Z","type":"stderr","args":["Error while handling request","{\"error\":\"Missing bot id header\"}"]}
+{"timestamp":"2026-05-02T17:31:23.876Z","type":"stderr","args":["Error processing task task-1777743083853-f6in82cim:","{}"]}
+{"timestamp":"2026-05-02T17:31:23.876Z","type":"stderr","args":["[WorkerPool] Worker 11 error on task task-1777743083853-f6in82cim:","Missing bot id header"]}
+{"timestamp":"2026-05-02T17:31:23.876Z","type":"stderr","args":["[Main] Error processing event:","{}"]}
+{"timestamp":"2026-05-02T17:31:23.876Z","type":"stderr","args":["Error while handling request","{\"error\":\"Missing bot id header\"}"]}
+{"timestamp":"2026-05-02T17:31:25.685Z","type":"stderr","args":["Error processing task task-1777743085652-gsavj38sk:","{}"]}
+{"timestamp":"2026-05-02T17:31:25.686Z","type":"stderr","args":["[WorkerPool] Worker 12 error on task task-1777743085652-gsavj38sk:","Missing bot id header"]}
+{"timestamp":"2026-05-02T17:31:25.686Z","type":"stderr","args":["[Main] Error processing event:","{}"]}
+{"timestamp":"2026-05-02T17:31:25.686Z","type":"stderr","args":["Error while handling request","{\"error\":\"Missing bot id header\"}"]}
+{"timestamp":"2026-05-02T17:31:25.747Z","type":"stderr","args":["Error processing task task-1777743085708-wgoowaicj:","{}"]}
+{"timestamp":"2026-05-02T17:31:25.748Z","type":"stderr","args":["[WorkerPool] Worker 13 error on task task-1777743085708-wgoowaicj:","Missing bot id header"]}
+{"timestamp":"2026-05-02T17:31:25.748Z","type":"stderr","args":["[Main] Error processing event:","{}"]}
+{"timestamp":"2026-05-02T17:31:25.748Z","type":"stderr","args":["Error while handling request","{\"error\":\"Missing bot id header\"}"]}
+{"timestamp":"2026-05-02T17:31:27.288Z","type":"stderr","args":["Error processing task task-1777743087266-c1hcl3kyq:","{}"]}
+{"timestamp":"2026-05-02T17:31:27.289Z","type":"stderr","args":["[WorkerPool] Worker 14 error on task task-1777743087266-c1hcl3kyq:","Missing bot id header"]}
+{"timestamp":"2026-05-02T17:31:27.289Z","type":"stderr","args":["[Main] Error processing event:","{}"]}
+{"timestamp":"2026-05-02T17:31:27.290Z","type":"stderr","args":["Error while handling request","{\"error\":\"Missing bot id header\"}"]}
+{"timestamp":"2026-05-02T17:31:27.332Z","type":"stderr","args":["Error processing task task-1777743087308-x1ongrvle:","{}"]}
+{"timestamp":"2026-05-02T17:31:27.333Z","type":"stderr","args":["[WorkerPool] Worker 15 error on task task-1777743087308-x1ongrvle:","Missing bot id header"]}
+{"timestamp":"2026-05-02T17:31:27.333Z","type":"stderr","args":["[Main] Error processing event:","{}"]}
+{"timestamp":"2026-05-02T17:31:27.333Z","type":"stderr","args":["Error while handling request","{\"error\":\"Missing bot id header\"}"]}
+{"timestamp":"2026-05-02T17:32:00.454Z","type":"stderr","args":["Error processing task task-1777743120432-387yte8hy:","{}"]}
+{"timestamp":"2026-05-02T17:32:00.455Z","type":"stderr","args":["[WorkerPool] Worker 16 error on task task-1777743120432-387yte8hy:","Missing bot id header"]}
+{"timestamp":"2026-05-02T17:32:00.455Z","type":"stderr","args":["[Main] Error processing event:","{}"]}
+{"timestamp":"2026-05-02T17:32:00.455Z","type":"stderr","args":["Error while handling request","{\"error\":\"Missing bot id header\"}"]}
+{"timestamp":"2026-05-02T17:34:33.403Z","type":"info","args":["× Tunnel closed: 1006"]}
+{"timestamp":"2026-05-02T17:34:33.404Z","type":"info","args":["○ Reconnecting tunnel..."]}
+{"timestamp":"2026-05-02T17:34:33.790Z","type":"info","args":["✓ Reconnected"]}

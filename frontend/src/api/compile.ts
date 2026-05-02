@@ -1,9 +1,17 @@
-// STUB — replace internals with real POST /compile when backend is ready
-export async function compileUML(
-  source: string
-): Promise<{ code: string }> {
-  console.log('[stub] compileUML called')
-  console.log('[stub] source preview:', source.slice(0, 120))
-  await new Promise((r) => setTimeout(r, 1200))
-  return { code: '// C++ output will appear here once the backend is connected.' }
+import { apiFetch } from './client'
+import type { CompileOptions, CompileResult } from '../types/api'
+
+export function compileMermaid(
+  mermaid: string,
+  options?: Partial<CompileOptions>,
+  signal?: AbortSignal
+): Promise<CompileResult> {
+  const body: { mermaid: string; options?: Partial<CompileOptions> } = { mermaid }
+  if (options) body.options = options
+
+  return apiFetch<CompileResult>('/compile', {
+    method: 'POST',
+    body,
+    signal,
+  })
 }

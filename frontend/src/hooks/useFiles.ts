@@ -4,16 +4,16 @@ import type { MmdFile } from '../types'
 
 const DEFAULT_SOURCE = `classDiagram
   class Animal {
-    +String name
-    +int age
+    +name : String
+    +age : int
     +makeSound() String
   }
   class Dog {
-    +String breed
+    +breed : String
     +fetch() void
   }
   class Cat {
-    +bool indoor
+    +indoor : bool
     +purr() void
   }
   Animal <|-- Dog
@@ -40,7 +40,7 @@ export function useFiles() {
     const newFile: MmdFile = {
       id: uuidv4(),
       name: `diagram${files.length + 1}.mmd`,
-      source: 'classDiagram\n  class MyClass {\n    +String field\n  }',
+      source: 'classDiagram\n  class MyClass {\n    +field : String\n  }',
     }
     setFiles((prev) => [...prev, newFile])
     setActiveFileId(newFile.id)

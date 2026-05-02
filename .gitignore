@@ -42,3 +42,10 @@ tmp/
 *.dylib
 *.dll
 *.exe
+
+# Secrets — never commit
+**/secrets.json
+**/.adk/secrets.json
+*.env
+.env.*
+!.env.example
